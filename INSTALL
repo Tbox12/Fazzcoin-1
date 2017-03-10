@@ -1,0 +1,9 @@
+Building FazzCoin
+
+See doc/readme-qt.rst for instructions on building FazzCoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of FazzCoin.
+
+See doc/build-*.txt for instructions on building FazzCoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of FazzCoin.

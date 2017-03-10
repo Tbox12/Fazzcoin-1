@@ -1,0 +1,2 @@
+debian/bin/FazzCoind usr/bin
+src/FazzCoind usr/lib/FazzCoin

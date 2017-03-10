@@ -1,0 +1,11 @@
+[Unit]
+Description=FazzCoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=FazzCoin
+ExecStart=/opt/FazzCoin/FazzCoind
+
+[Install]
+WantedBy=multi-user.target

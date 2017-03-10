@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=FazzCoin
+Comment=FazzCoin P2P Cryptocurrency
+Comment[ru]=FazzCoin, P2P криптовалюта
+Comment[fr]=FazzCoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=FazzCoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/FazzCoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/FazzCoin80.xpm
+MimeType=x-scheme-handler/FazzCoin;
+Categories=Office;

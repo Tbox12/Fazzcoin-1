@@ -1,0 +1,5 @@
+FazzCoin-qt usr/bin
+share/pixmaps/FazzCoin32.xpm usr/share/pixmaps
+share/pixmaps/FazzCoin80.xpm usr/share/pixmaps
+debian/FazzCoin-qt.desktop usr/share/applications
+debian/FazzCoin-qt.protocol usr/share/kde4/services/

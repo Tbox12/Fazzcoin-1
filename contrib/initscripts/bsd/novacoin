@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: FazzCoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# FazzCoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable FazzCoin service.
+# FazzCoin_config (path): Set to /usr/local/etc/FazzCoin.conf by default.
+# FazzCoin_user:  The user account FazzCoin daemon runs as. It uses 'root' user by default.
+# FazzCoin_group: The group account FazzCoin daemon runs as. It uses 'wheel' group by default.
+# FazzCoin_datadir (str): Default to "/var/db/FazzCoin". Base data directory.
+
+. /etc/rc.subr
+
+name=FazzCoin
+rcvar=FazzCoin_enable
+
+: ${FazzCoin_enable:=NO}
+: ${FazzCoin_config=/usr/local/etc/FazzCoin.conf}
+: ${FazzCoin_datadir=/var/db/FazzCoin}
+: ${FazzCoin_user="root"}
+: ${FazzCoin_group="wheel"}
+
+required_files=${FazzCoin_config}
+command=/usr/local/bin/FazzCoind
+FazzCoin_chdir=${FazzCoin_datadir}
+pidfile="${FazzCoin_datadir}/FazzCoind.pid"
+stop_cmd=FazzCoin_stop
+command_args="-conf=${FazzCoin_config} -datadir=${FazzCoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+FazzCoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${FazzCoin_datadir}
+	[ $? -eq 0 ] && chown -R ${FazzCoin_user}:${FazzCoin_group} ${FazzCoin_datadir}
+}
+
+FazzCoin_prestart()
+{
+	if [ ! -d "${FazzCoin_datadir}/." ]; then
+		FazzCoin_create_datadir || return 1
+	fi
+}
+
+FazzCoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+FazzCoin_stop()
+{
+    FazzCoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${FazzCoin_config} -datadir=${FazzCoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"
